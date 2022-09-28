@@ -13,6 +13,43 @@ public class Program {
     public static void main(String[] args) {
 
         Connection conn = null;
+        Statement st = null;
+
+        try{
+            conn = DB.getConnection();
+            conn.setAutoCommit(false);
+
+            st = conn.createStatement();
+
+            int rows1 = st.executeUpdate("UPDATE seller SET BaseSalary = 2090 WHERE DepartmentId = 1");
+            int x = 1;
+
+            /*
+            if(x < 2){
+                throw new SQLException("Fake error");
+            } */
+            int rows2 = st.executeUpdate("UPDATE seller SET BaseSalary = 3090 WHERE DepartmentId = 2");
+
+            conn.commit(); // Confirm the transaction
+
+            System.out.println("Rows1 " + rows1);
+            System.out.println("Rows2 " + rows2);
+        }catch (SQLException e){
+            try {
+                conn.rollback(); // Reverse the database when error
+                throw new DbException("Transaction rolled back! Caused by " + e.getMessage());
+            } catch (SQLException ex) {
+                throw new DbException("Error trying to rollback! Caused by " + ex.getMessage());
+            }
+        }
+        finally {
+            DB.closeStatement(st);
+            DB.closeConnection();
+        }
+    }
+
+    public void deleteData(){
+        Connection conn = null;
         PreparedStatement st = null;
 
         try{
@@ -20,8 +57,8 @@ public class Program {
 
             st = conn.prepareStatement(
                     "DELETE FROM department "
-                    + "WHERE "
-                    + "Id = ?"
+                            + "WHERE "
+                            + "Id = ?"
             );
 
             st.setInt(1, 5);
