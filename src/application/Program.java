@@ -11,6 +11,10 @@ public class Program {
 
     public static void main(String[] args) {
 
+        
+    }
+
+    public void updateData(){
         Connection conn = null;
         PreparedStatement st = null;
 
@@ -19,9 +23,9 @@ public class Program {
 
             st = conn.prepareStatement(
                     "UPDATE seller "
-                    + "SET BaseSalary = BaseSalary + ? "
-                    + "WHERE "
-                    + "(DepartmentId = ?)"
+                            + "SET BaseSalary = BaseSalary + ? "
+                            + "WHERE "
+                            + "(DepartmentId = ?)"
             );
 
             st.setDouble(1, 200.0);
@@ -38,6 +42,7 @@ public class Program {
             DB.closeConnection();
         }
     }
+
 
     public void insertData(){
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyy");
