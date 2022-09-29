@@ -18,6 +18,7 @@ import java.util.Map;
 public class SellerDaoJDBC implements SellerDao {
 
     private Connection conn;
+    private Map<Integer, Department> map = new HashMap<>();
 
     public SellerDaoJDBC(Connection conn){
         this.conn = conn;
@@ -83,17 +84,9 @@ public class SellerDaoJDBC implements SellerDao {
             rs = st.executeQuery();
 
             List<Seller> list = new ArrayList<>();
-            Map<Integer, Department> map = new HashMap<>();
 
             while (rs.next()){
-
-                Department dep = map.get(rs.getInt("DepartmentId"));
-
-                if (dep == null){
-                    dep = instantiateDepartment(rs);
-                    map.put(dep.getId(), dep);
-                }
-
+                Department dep = instantiateDepartment(rs);
                 Seller obj = instantiateSeller(rs, dep);
                 list.add(obj);
             }
@@ -105,6 +98,8 @@ public class SellerDaoJDBC implements SellerDao {
             DB.closeStatement(st);
             DB.closeResultSet(rs);
         }
+
+
     }
 
     @Override
@@ -124,17 +119,9 @@ public class SellerDaoJDBC implements SellerDao {
             rs = st.executeQuery();
 
             List<Seller> list = new ArrayList<>();
-            Map<Integer, Department> map = new HashMap<>();
 
             while (rs.next()){
-
-                Department dep = map.get(rs.getInt("DepartmentId"));
-
-                if (dep == null){
-                    dep = instantiateDepartment(rs);
-                    map.put(dep.getId(), dep);
-                }
-
+                Department dep = instantiateDepartment(rs);
                 Seller obj = instantiateSeller(rs, dep);
                 list.add(obj);
             }
@@ -161,10 +148,15 @@ public class SellerDaoJDBC implements SellerDao {
     }
 
     private Department instantiateDepartment(ResultSet rs) throws SQLException {
-        Department dep = new Department();
-        dep.setId(rs.getInt("DepartmentId"));
-        dep.setName(rs.getString("DepName"));
 
+        Department dep = map.get(rs.getInt("DepartmentId"));
+
+        if (dep == null){
+            dep = new Department();
+            dep.setId(rs.getInt("DepartmentId"));
+            dep.setName(rs.getString("DepName"));
+            map.put(dep.getId(), dep);
+        }
         return dep;
     }
 }
