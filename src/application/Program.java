@@ -6,6 +6,7 @@ import model.dao.SellerDao;
 import model.entities.Department;
 import model.entities.Seller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -47,6 +48,34 @@ public class Program {
 
         /*
         System.out.println("\n========== TEST 6: SELLER Delete ==========");
+        sellerDao.deleteById(8);
+        System.out.println("Seller deleted!"); */
+
+        System.out.println("\n\n\n\n========== TEST 1: DEPARTMENT FindById ==========");
+        Department department1 = departmentDao.findById(1);
+        System.out.println(department1);
+
+        System.out.println("\n========== TEST 2: DEPARTMENT FindAll ==========");
+        List<Department> listDep = new ArrayList<>();
+        listDep = departmentDao.findAll();
+        for (Department obj : listDep){
+            System.out.println(obj);
+        }
+
+        System.out.println("\n========== TEST 3: DEPARTMENT Insert ==========");
+        Department newDep  = new Department(null, "Food");
+
+        departmentDao.insert(newDep);
+        System.out.println("Inserted! New id = " + newDep.getId());
+
+        System.out.println("\n========== TEST 4: DEPARTMENT Update ==========");
+        department1 = departmentDao.findById(6);
+        department1.setName("Phones");
+        departmentDao.update(department1);
+        System.out.println("Department Updated");
+
+        /*
+        System.out.println("\n========== TEST 6: DEPARTMENT Delete ==========");
         sellerDao.deleteById(8);
         System.out.println("Seller deleted!"); */
     }
