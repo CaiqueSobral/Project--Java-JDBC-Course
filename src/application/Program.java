@@ -31,16 +31,20 @@ public class Program {
             System.out.println(obj);
         }
 
-        System.out.println("\n========== TEST 4: SELLER Insert ==========");
+        /* System.out.println("\n========== TEST 4: SELLER Insert ==========");
         Seller newSeller = new Seller(null, "Gredi", "Gredi@gmail.com", new Date(), 4000.0, department);
 
         sellerDao.insert(newSeller);
-        System.out.println("Inserted! New id = " + newSeller.getId());
+        System.out.println("Inserted! New id = " + newSeller.getId()); */
 
         System.out.println("\n========== TEST 5: SELLER Update ==========");
         seller = sellerDao.findById(1);
         seller.setName("Suxu Lima");
         sellerDao.update(seller);
         System.out.println("Seller Updated");
+
+        System.out.println("\n========== TEST 6: SELLER Delete ==========");
+        sellerDao.deleteById(8);
+        System.out.println("Seller deleted!");
     }
 }
