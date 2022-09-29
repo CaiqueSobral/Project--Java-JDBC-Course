@@ -1,6 +1,7 @@
 package application;
 
 import model.dao.DaoFactory;
+import model.dao.DepartmentDao;
 import model.dao.SellerDao;
 import model.entities.Department;
 import model.entities.Seller;
@@ -13,6 +14,7 @@ public class Program {
     public static void main(String[] args) {
 
         SellerDao sellerDao = DaoFactory.createSellerDao();
+        DepartmentDao departmentDao = DaoFactory.createDepartmentDao();
 
         System.out.println("========== TEST 1: SELLER FindById ==========");
         Seller seller = sellerDao.findById(3);
@@ -43,8 +45,9 @@ public class Program {
         sellerDao.update(seller);
         System.out.println("Seller Updated");
 
+        /*
         System.out.println("\n========== TEST 6: SELLER Delete ==========");
         sellerDao.deleteById(8);
-        System.out.println("Seller deleted!");
+        System.out.println("Seller deleted!"); */
     }
 }
